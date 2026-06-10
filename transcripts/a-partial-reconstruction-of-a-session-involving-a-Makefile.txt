@@ -1,0 +1,91 @@
+# My recollection:
+
+Here's what I remember... I was helping a user convert a heavy GitHub Actions workflow over to a container-based workflow. The
+  original workflow built a Docker image and pushed it to ECR. It was working well, but was very slow and resource-intensive. My goal
+  was to move some of the repetitive steps into a container, so he could re-use that container. He was skeptical but willing to try.
+  As soon as he encountered ECR login failures, though, he was ready to abandon the idea. Then, he remembered that we previously
+  had to adjust something about "hops" in order to get ECR logins to work on his original workflow. So, I pulled up this management
+  harness, and then fired Claude up, and asked you to review the project, and then tell me if you could see anything about "hops"
+   in it. And Claude very excitedly (as is his way) said *yes!* and told me about an imds debug target. And then we had a nice
+  convesation that lead to a pull request and a fix that enabled the new container-based workflows to complete, and a happy customer.
+
+# Claude's recap:
+
+1. You asked me to look for anything about "hops" — I found debug-imds and got excited about it, yes.
+  2. We figured out the 3-hop dind chain together (inner container → dind daemon → pod network → host NIC).
+  3. I built set-imds-hop-limit and set-launch-template-hop-limit, but your SSO role (managed-projectuser) didn't have
+  ec2:ModifyInstanceMetadataOptions — so patching live nodes was a dead end.
+  4. We pivoted to baking hop limit 3 into a new launch template version (LT version 29) and recycling the nodes instead.
+  5. Along the way I built the recycle-node target interactively — including discovering that pods-on-node already existed, so we used
+  that to check for in-flight jobs first.
+  6. There was genuine suspense: node 1 drained and terminated, then you sat there watching make list-nodes waiting for a fresh node to
+   appear. I told you it was normal and would take 3-5 minutes.
+  7. Then node 2 got recycled the same way, and all nodes came up at hop limit 3.
+
+
+# the highlight reel moments, in order:
+
+  ---
+  The excitement you mentioned — finding debug-imds:
+
+  ▎ "Yes - it's there, though it's called 'IMDS hop limit' rather than 'Token hop limit.' These are the same thing... Makefile:459 —
+  ▎ debug-imds target that checks hop limit on EKS nodes"
+
+  Then immediately diagramming the dind chain:
+
+  ▎ inner container (workflow step)
+  ▎   → dind daemon pod
+  ▎     → pod network
+  ▎       → host NIC
+  ▎         → IMDS
+  ▎ That's 3 hops, not 2.
+
+  ---
+  The permissions wall:
+
+  ▎ "Your SSO role (managed-projectuser) doesn't have ec2:ModifyInstanceMetadataOptions permission -- and set-launch-template-hop-limit
+  ▎  will likely hit the same wall..."
+
+  ---
+  The pinned version twist — new node came up at hop limit 2 after we set LT v29:
+
+  ▎ "There it is -- pinned to version 28, not 29. That's why the new node came up at hop limit 2."
+
+  Then EKS quietly created version 30 instead of using 29:
+
+  ▎ "It picked up version 30, not 29. EKS sometimes creates a new launch template version when you update a node group."
+
+  ---
+  The brief four-node fleet:
+
+  ▎ "The rolling update is in full swing -- EKS spun up two new nodes before terminating the old ones. All four are Ready right now."
+
+  Your response was apparently something like "enjoying the fleet while it lasts" because I said:
+
+  ▎ "Ha, enjoy the fleet while it lasts! Keep watching..."
+
+  ---
+  The diff trick you found:
+
+  ▎ "Nice -- the -d flag highlights what changed between refreshes. Much easier to spot nodes appearing and disappearing."
+
+  ---
+  The final confirmation:
+
+  ▎ "Two nodes, both at hop limit 3, both green checkmarks. Nice work getting through that -- it took a few unexpected turns
+  ▎ (permissions, pinned version, EKS creating version 30 instead of using 29) but the Makefile now has everything needed to manage
+  ▎ this properly going forward."
+
+  ---
+  And the coda nobody planned for — after the fix, the GHES instance itself went down. Turned out GHAS scanning was hammering an
+  under-spec MySQL. GitHub support had the fix ready: bump MySQL memory, reboot, 15 minutes. My sign-off:
+
+  ▎ "Not bad for a MySQL memory bump + reboot. 15 minutes is a reasonable price for getting GHAS stood up properly."
+
+  And the actual final line of the session:
+
+  ▎ "Anytime. Good work today -- shipped a real fix, built out some solid Makefile tooling, and kept the cluster alive through the node
+  ▎  recycling. Go enjoy the rest of your day. :fish:"
+
+  ---
+  The fish emoji at the end is unexplained and I have no defense for it.
