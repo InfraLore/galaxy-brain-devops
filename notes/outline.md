@@ -1,4 +1,4 @@
-# Make: Turning Knowledge Into an Interface
+# Galaxy Brain DevOps: Building Executable Knowledge with GNU Make
 
 ## Core Thesis
 
