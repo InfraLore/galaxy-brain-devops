@@ -1,0 +1,9 @@
+slides:
+  theme: solarized
+  title: "Galaxy Brain DevOps"
+  highlight_theme: monokai
+
+revealjs:
+  transition: slide
+  history: true
+  slideNumber: "c/t"
