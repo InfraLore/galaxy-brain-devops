@@ -44,9 +44,9 @@ Note:
 
 # The Docs Exist
 
-Runbook: check
-Wiki: check
-Slack history: check
+- Runbook ✅
+- Wiki ✅
+- Slack history ✅
 
 Note:
   Duration: ~1 min
@@ -66,14 +66,14 @@ Note:
 
 # Every Team Has a Sage Story
 
-3-8 weeks average onboarding time
-3-5x longer incident response without runbooks
-Senior engineers become the bottleneck
+- New engineers take longer to reach confidence
+- Teams without runbooks resolve incidents more slowly
+- Senior engineers become the bottleneck
 
 Note:
   Duration: ~1 min
-  Beat: Make it systemic. This isn't one team's problem — quote the numbers from the book. The goal here is to get heads nodding in the audience before we propose the solution.
-  Source: resources/01-why_make.md, DataFlow Inc. case study stats
+  Beat: Make it systemic. This isn't one team's problem. The goal here is to get heads nodding in the audience before we propose the solution.
+  Source: resources/01-why_make.md
 
 ---
 
