@@ -13,9 +13,11 @@ John H. Robinson, IV
 ### UC-Tech 2026
 
 Note:
-  Duration: ~30 seconds
-  Beat: Title card. Let the room settle. Hardy and John introduce themselves briefly — one sentence each. Hand off to John to open Act I.
-  Source: README.md
+Hey, I'm Hardy. I work on the Developer Experience team at UCSF. And I'm here with my friend and co-author John. John is a veteran Debian developer and Programmer Analyst at the UCLA Library, where he keeps complex academic library systems running -- infrastructure automation, container pipelines, config management. He bridges the gap between software development and systems administration, and he's way better at it than I am.
+
+*[John takes over]*
+
+And I'm John. He's being modest -- Hardy is the person at UCSF who makes sure developers have the tools and the environment they need to actually do their jobs. He's good at it. This talk is about something we've both been thinking about for a long time -- and writing about. The title is Galaxy Brain DevOps. We'll explain that as we go. But it starts with a problem.
 
 ---
 
@@ -24,9 +26,7 @@ Note:
 It is access.
 
 Note:
-  Duration: ~30 seconds
-  Beat: Land the thesis before the story. Organizations already have the knowledge — it just can't reach the person who needs it at 3 A.M. This single slide frames everything that follows.
-  Transition: "Let me tell you about Sage."
+The problem is not knowledge. It is access. Most organizations already have the knowledge they need -- it just can't reach the person who needs it, at 3 A.M., when everything is on fire. Let me tell you about Sage.
 
 ---
 
@@ -37,10 +37,11 @@ Note:
 ![](sage-before.png)
 
 Note:
-  Duration: ~1 min
-  Beat: Set up Sage as the audience stand-in. Not a junior engineer — a capable person put in an impossible situation. The problem is the system, not the person.
-  Source: resources/01-why_make.md, Chapter 1 opening
-  Transition: The incident is real. The docs are real. What happens next is the problem.
+  It's 3 AM Saturday. Production is down. Sage -- who joined three months ago -- is frantically searching through Slack history, wiki pages, and a documentation site, trying to figure out how to roll back Friday's deployment. He finds five *unique* runbooks. Two mention scripts that no longer exist. One points to a Confluence page he doesn't have access to. The senior engineer who wrote most of this left four months ago, and took years of team lore with them.
+
+  An hour later, the rollback works. But this wasn't an isolated incident.
+
+  Sage isn't the problem. The system is.
 
 ---
 
@@ -51,18 +52,14 @@ Note:
 - Slack history :check_mark_button:
 
 Note:
-  Duration: ~1 min
-  Beat: Emphasize that documentation failure is NOT "we didn't write it down." Sage finds docs. They're just not actionable under pressure. Three different places to look, none of them give Sage a command to run.
-  Source: resources/01-why_make.md
+  Sage has resources: Runbooks, a wiki, two years of Slack history. The docs exist. They just aren't enough. Having documentation is not the same as having access to knowledge when you need it.
 
 ---
 
 # Knowledge Without Access Is Not Knowledge
 
 Note:
-  Duration: ~30 seconds
-  Beat: The quiet gut-punch. Sit on this for a beat. The organization invested in documentation. It failed anyway — not because it was wrong, but because it wasn't accessible in the moment of need.
-  Transition: So why does this keep happening?
+  Knowledge Without Access Is Not Knowledge. We invest all this time in writing documentation, and it fails us anyway. Not because it's wrong, but because it's not accessible in the moment of need. Why does this keep happening?
 
 ---
 
@@ -73,20 +70,16 @@ Note:
 - Senior engineers become the bottleneck
 
 Note:
-  Duration: ~1 min
-  Beat: Make it systemic. This isn't one team's problem. The goal here is to get heads nodding in the audience before we propose the solution.
-  Source: resources/01-why_make.md
+  There's all kinds of metrics to back this up -- DORA metrics will tell you this -- but you don't need metrics to know: new engineers take longer to reach confidence, teams without runbooks resolve incidents more slowly. So you write the runbooks, but they're impossible to keep current. Senior engineers become the bottleneck, because they hold the team lore, the mental model, the knowledge that the system is based on.
 
 ---
 
 <!-- Speaker: John -->
 
-# Why Documentation Fails
+# Why Documentation Sucks
 
 Note:
-  Duration: ~30 seconds
-  Beat: Transition slide. John signals we're now diagnosing the root cause, not just the symptom. Keep it brief — the next four slides each name a failure mode.
-  Source: resources/01-why_make.md
+  I've already hinted at some of the reasons, but let's dive into this. Why does documentation, even great documentation, suck?
 
 ---
 
@@ -96,9 +89,7 @@ Note:
 - No compiler, no tests, no alarm
 
 Note:
-  Duration: ~45 seconds
-  Beat: Documentation has no feedback loop. Code that drifts breaks CI. Docs that drift just quietly lie. No one knows until someone follows the runbook and it doesn't work.
-  Source: resources/01-why_make.md
+  Systems change faster than docs. Every time someone updates a deployment script, changes a tool version, adds a new requirement -- all the related documentation should be updated. In practice, it rarely is. And here's the thing: code that drifts breaks CI. Docs that drift just quietly lie. There's no alarm, no failing test. You don't find out until someone follows the runbook and it doesn't work.
 
 ---
 
@@ -108,9 +99,7 @@ Note:
 - Harder to maintain = faster drift
 
 Note:
-  Duration: ~45 seconds
-  Beat: The comprehensiveness paradox. The more thorough you try to be, the faster it rots. Good intentions, bad outcomes.
-  Source: resources/01-why_make.md
+  So you try to write better documentation. More thorough, more complete. A 47-page deployment guide that covers every edge case. And now you have 47 pages of surface area for rot. Worse: when engineers find one outdated section, they stop trusting the whole document. Comprehensiveness doesn't solve the problem -- it makes it bigger.
 
 ---
 
@@ -120,9 +109,7 @@ Note:
 - Team lore fills the gap
 
 Note:
-  Duration: ~45 seconds
-  Beat: The discovery problem. Even if docs exist, engineers don't know to look for them. They ask a senior instead. That senior becomes a bottleneck. The knowledge is there — it just isn't findable.
-  Source: resources/01-why_make.md
+  Your docs don't even have to be wrong to fail. You've got smoke tests, load testing, debugging, observability. But if engineers don't know those capabilities exist, they'll either reinvent them poorly or not use them at all. Traditional documentation assumes engineers know what questions to ask. The most valuable knowledge is often the knowledge you don't know you need. So they ask a senior engineer instead -- and now you're back to team lore filling the gap.
 
 ---
 
@@ -133,9 +120,7 @@ vs.
 - What the docs say
 
 Note:
-  Duration: ~45 seconds
-  Beat: Over time, the real procedure and the documented procedure become two different things. Neither is wrong — they just aren't the same. New people learn the documented version. Senior people use the real one. No one reconciles them.
-  Transition: So what if the documentation couldn't drift? What if it was the thing you actually ran?
+  Over time, the real procedure and the documented procedure become two different things. Neither is wrong -- they just aren't the same anymore. New engineers learn the documented version. Senior engineers use the real one. Nobody reconciles them. And every time a new engineer asks how something works, a senior engineer has to stop what they're doing and explain. That's not mentorship -- that's a broken system.
 
 ---
 
@@ -144,9 +129,7 @@ Note:
 # Samvera 2017
 
 Note:
-  Duration: ~30 seconds
-  Beat: Hardy: "I want to tell you about the moment I understood what Make could do." Set the scene — Samvera is the library software community. 2017 conference. Hardy is in the audience.
-  Source: resources/Foreword.md, notes/outline.md Act III
+  In 2017, at Samvera Connect in Evanston, Illinois, I proposed an unconference session on developer workspaces. Samvera is a library software community -- the kind of place where getting a development environment running was a steep, lore-driven affair. You needed a senior engineer looking over your shoulder for most of a day. I wanted to show off what Vagrant could do. What I didn't expect was John.
 
 ---
 
@@ -157,9 +140,7 @@ Note:
 - Make targets
 
 Note:
-  Duration: ~1 min
-  Beat: Hardy describes watching John do a live demo — spun up an environment and ran Make targets in real-time, in front of the room. The audience went quiet. Hardy: "I didn't know you could do that." Hand to John to elaborate.
-  Source: resources/Foreword.md
+  John sat down and proceeded to ad-lib an entire development environment on the spot. He called a Make target. Then another. Vagrant spun up whatever he needed -- a database, a web server, a job queue -- pulling pieces from past projects, assembling them into something new. He wasn't following a script. He was composing. In minutes, he was working. I was blown away. I asked him for the Makefile afterward. Its README states the philosophy plainly: "Makefile is all you need. Everything else can be downloaded automatically." I poked at it, found it deeply weird, and set it aside. Then, gradually, I started noticing Makefiles everywhere.
 
 ---
 
