@@ -30,14 +30,12 @@ The problem is not knowledge. It is access. Most organizations already have the 
 
 ---
 
-<!-- Speaker: John -->
-
 # Meet Sage
 
 ![](sage-before.png)
 
 Note:
-  It's 3 AM Saturday. Production is down. Sage -- who joined three months ago -- is frantically searching through Slack history, wiki pages, and a documentation site, trying to figure out how to roll back Friday's deployment. He finds five *unique* runbooks. Two mention scripts that no longer exist. One points to a Confluence page he doesn't have access to. The senior engineer who wrote most of this left four months ago, and took years of team lore with them.
+  John: It's 3 AM Saturday. Production is down. Sage -- who joined three months ago -- is frantically searching through Slack history, wiki pages, and a documentation site, trying to figure out how to roll back Friday's deployment. He finds five *unique* runbooks. Two mention scripts that no longer exist. One points to a Confluence page he doesn't have access to. The senior engineer who wrote most of this left four months ago, and took years of team lore with them.
 
   An hour later, the rollback works. But this wasn't an isolated incident.
 
@@ -52,14 +50,14 @@ Note:
 - Slack history :check_mark_button:
 
 Note:
-  Sage has resources: Runbooks, a wiki, two years of Slack history. The docs exist. They just aren't enough. Having documentation is not the same as having access to knowledge when you need it.
+  John: Sage has resources: Runbooks, a wiki, two years of Slack history. The docs exist. They just aren't enough. Having documentation is not the same as having access to knowledge when you need it.
 
 ---
 
 # Knowledge Without Access Is Not Knowledge
 
 Note:
-  Knowledge Without Access Is Not Knowledge. We invest all this time in writing documentation, and it fails us anyway. Not because it's wrong, but because it's not accessible in the moment of need. Why does this keep happening?
+  John: Knowledge Without Access Is Not Knowledge. We invest all this time in writing documentation, and it fails us anyway. Not because it's wrong, but because it's not accessible in the moment of need. Why does this keep happening?
 
 ---
 
@@ -70,7 +68,7 @@ Note:
 - Senior engineers become the bottleneck
 
 Note:
-  There's all kinds of metrics to back this up -- DORA metrics will tell you this -- but you don't need metrics to know: new engineers take longer to reach confidence, teams without runbooks resolve incidents more slowly. So you write the runbooks, but they're impossible to keep current. Senior engineers become the bottleneck, because they hold the team lore, the mental model, the knowledge that the system is based on.
+  John: There's all kinds of metrics to back this up -- DORA metrics will tell you this -- but you don't need metrics to know: new engineers take longer to reach confidence, teams without runbooks resolve incidents more slowly. So you write the runbooks, but they're impossible to keep current. Senior engineers become the bottleneck, because they hold the team lore, the mental model, the knowledge that the system is based on.
 
 ---
 
@@ -79,7 +77,7 @@ Note:
 # Why Documentation Sucks
 
 Note:
-  I've already hinted at some of the reasons, but let's dive into this. Why does documentation, even great documentation, suck?
+  John: I've already hinted at some of the reasons, but let's dive into this. Why does documentation, even great documentation, suck? Hardy, do you know?
 
 ---
 
@@ -89,7 +87,7 @@ Note:
 - No compiler, no tests, no alarm
 
 Note:
-  Systems change faster than docs. Every time someone updates a deployment script, changes a tool version, adds a new requirement -- all the related documentation should be updated. In practice, it rarely is. And here's the thing: code that drifts breaks CI. Docs that drift just quietly lie. There's no alarm, no failing test. You don't find out until someone follows the runbook and it doesn't work.
+  Hardy: Systems change faster than docs. Every time someone updates a deployment script, changes a tool version, adds a new requirement -- all the related documentation should be updated. In practice, it rarely is. And here's the thing: code that drifts breaks CI. Docs that drift just quietly lie. There's no alarm, no failing test. You don't find out until someone follows the runbook and it doesn't work.
 
 ---
 
@@ -99,7 +97,7 @@ Note:
 - Harder to maintain = faster drift
 
 Note:
-  So you try to write better documentation. More thorough, more complete. A 47-page deployment guide that covers every edge case. And now you have 47 pages of surface area for rot. Worse: when engineers find one outdated section, they stop trusting the whole document. Comprehensiveness doesn't solve the problem -- it makes it bigger.
+  Hardy: So you try to write better documentation. More thorough, more complete. A 47-page deployment guide that covers every edge case. And now you have 47 pages of surface area for rot. Worse: when engineers find one outdated section, they stop trusting the whole document. Comprehensiveness doesn't solve the problem -- it makes it bigger. That's not even the worst of it, though, right?
 
 ---
 
@@ -109,7 +107,7 @@ Note:
 - Team lore fills the gap
 
 Note:
-  Your docs don't even have to be wrong to fail. You've got smoke tests, load testing, debugging, observability. But if engineers don't know those capabilities exist, they'll either reinvent them poorly or not use them at all. Traditional documentation assumes engineers know what questions to ask. The most valuable knowledge is often the knowledge you don't know you need. So they ask a senior engineer instead -- and now you're back to team lore filling the gap.
+  John: Your docs don't even have to be wrong to fail. You've got smoke tests, load testing, debugging, observability. But if engineers don't know those capabilities exist, they'll either reinvent them poorly or not use them at all. Traditional documentation assumes engineers know what questions to ask. The most valuable knowledge is often the knowledge you don't know you need. So they ask a senior engineer instead -- and now you're back to team lore filling the gap.
 
 ---
 
@@ -120,16 +118,14 @@ vs.
 - What the docs say
 
 Note:
-  Over time, the real procedure and the documented procedure become two different things. Neither is wrong -- they just aren't the same anymore. New engineers learn the documented version. Senior engineers use the real one. Nobody reconciles them. And every time a new engineer asks how something works, a senior engineer has to stop what they're doing and explain. That's not mentorship -- that's a broken system.
+  John: Over time, the real procedure and the documented procedure become two different things. Neither is wrong -- they just aren't the same anymore. New engineers learn the documented version. Senior engineers use the real one. Nobody reconciles them. And every time a new engineer asks how something works, a senior engineer has to stop what they're doing and explain. That's not mentorship -- that's a broken system. Before we suggest a solution, Hardy has a story for you.
 
 ---
-
-<!-- Speaker: Both — Hardy sets up, John elaborates -->
 
 # Samvera 2017
 
 Note:
-  In 2017, at Samvera Connect in Evanston, Illinois, I proposed an unconference session on developer workspaces. Samvera is a library software community -- the kind of place where getting a development environment running was a steep, lore-driven affair. You needed a senior engineer looking over your shoulder for most of a day. I wanted to show off what Vagrant could do. What I didn't expect was John.
+  Hardy: In 2017, at Samvera Connect in Evanston, Illinois, I proposed an unconference session on developer workspaces. Samvera is a library software community -- the kind of place where getting a development environment running was a steep, lore-driven affair. You needed a senior engineer looking over your shoulder for most of a day. I wanted to show off what Vagrant could do in that unconference. What I didn't expect was John.
 
 ---
 
@@ -138,9 +134,10 @@ Note:
 - Live terminal
 - Vagrant up
 - Make targets
+- [github.com/jhriv/vagrant-as-infrastructure](https://github.com/jhriv/vagrant-as-infrastructure)
 
 Note:
-  John sat down and proceeded to ad-lib an entire development environment on the spot. He called a Make target. Then another. Vagrant spun up whatever he needed -- a database, a web server, a job queue -- pulling pieces from past projects, assembling them into something new. He wasn't following a script. He was composing. In minutes, he was working. I was blown away. I asked him for the Makefile afterward. Its README states the philosophy plainly: "Makefile is all you need. Everything else can be downloaded automatically." I poked at it, found it deeply weird, and set it aside. Then, gradually, I started noticing Makefiles everywhere.
+  Hardy: John sat down and proceeded to ad-lib an entire development environment on the spot. He called a Make target. Then another. Vagrant spun up whatever he needed -- a database, a web server, a job queue -- pulling pieces from past projects, assembling them into something new. He wasn't following a script. He was composing. In minutes, he was working. I was blown away. I asked him for the Makefile afterward. Its README states the philosophy plainly: "Makefile is all you need. Everything else can be downloaded automatically." The link to it is on this slide. I poked at it, found it deeply weird, and set it aside. Then, gradually, I started noticing Makefiles everywhere. John: why Make?
 
 ---
 
@@ -151,9 +148,7 @@ Note:
 - Available everywhere
 
 Note:
-  Duration: ~1 min
-  Beat: John takes over. Make outlasted the tools it was invented to build. It's on every Unix-like system, no install required. The reason it survived isn't nostalgia — it's that the problems it solves never went away.
-  Source: resources/01-why_make.md
+  John: Make outlasted the tools it was invented to build. It's on every Unix-like system, no install required. The reason it survived isn't nostalgia — it's that the problems it solves never went away.
 
 ---
 
@@ -164,9 +159,7 @@ Note:
 - A knowledge catalog
 
 Note:
-  Duration: ~1 min
-  Beat: The conceptual pivot. This is the frame the rest of the talk builds on. Make is not a C compiler driver. It's a way to expose what a project knows how to do.
-  Transition: So what does that actually mean in practice?
+  Most people think of Make as a build tool. Something you use to compile software. That's how it started, and that reputation stuck. But that's not what we're talking about. We want you to think of Make differently -- as an operational interface. A way to expose what a project knows how to do. Not a build tool. A knowledge catalog. When you run `make help`, you're not asking about compilation steps. You're asking the project: what can you do?
 
 ---
 
