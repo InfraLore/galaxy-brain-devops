@@ -46,9 +46,9 @@ Note:
 
 # The Docs Exist
 
-- Runbook ✅
-- Wiki ✅
-- Slack history ✅
+- Runbook :check_mark_button:
+- Wiki :check_mark_button:
+- Slack history :check_mark_button:
 
 Note:
   Duration: ~1 min
