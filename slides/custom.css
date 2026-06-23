@@ -1,0 +1,9 @@
+/* Override reveal.js solarized theme defaults */
+.reveal {
+  --r-heading1-size: 2.5em;
+}
+
+/* Square bullets instead of round */
+.reveal ul {
+  list-style-type: square;
+}

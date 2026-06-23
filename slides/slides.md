@@ -117,7 +117,7 @@ Note:
 # Engineers Don't Know What's Possible
 
 - No discovery mechanism
-- Tribal knowledge fills the gap
+- Team lore fills the gap
 
 Note:
   Duration: ~45 seconds
@@ -572,11 +572,20 @@ Note:
 
 ---
 
-# We've Been Writing a Book
+# InfraLore
+
+- **[Make for DevOps](https://github.com/InfraLore/make_for_devops)** -- free book, BSD-0, PDF + epub
+- **[Makefile Sage](https://github.com/InfraLore/makefile-sage)** -- Claude Code plugin
+- **[Make Cheatsheet](https://github.com/InfraLore/make_cheatsheet)** -- coming soon
+
+Note:
+  Duration: ~30 seconds
+  Beat: Low-key. These are free. The book exists because we wrote it the same way we write Makefiles -- incrementally, out in the open.
+
+--
 
 ![](make-for-devops-cover.png)
 
 Note:
-  Duration: ~30 seconds
-  Beat: Show the cover. Keep it brief. "We've been writing a book about this. Hardy and John — and Claude, as collaborator." Don't over-explain. Let the room react.
+  Beat: Book cover, if the room wants to know more.
   Images: make-for-devops-cover.png

@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 
-.PHONY: help slides-init slides slides-serve
+.PHONY: help slides-init slides slides-serve lint
 
 help: ## Show this help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) \
@@ -18,3 +18,7 @@ slides: slides-init ## Build the slide deck
 
 slides-serve: slides-init ## Live-preview the slide deck
 	.venv/bin/mkslides serve --dev-addr localhost:6767 slides/
+
+lint: ## Check for banned phrases in slide content
+	@! grep -rni "tribal knowledge" slides/ \
+		|| (echo "ERROR: 'tribal knowledge' found -- use 'team lore' instead" && exit 1)
