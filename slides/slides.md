@@ -7,8 +7,10 @@ author: "Hardy Pottinger & John H. Robinson, IV"
 
 # Galaxy Brain DevOps
 
-Hardy Pottinger & John H. Robinson, IV
-UC-Tech 2026
+Hardy Pottinger  
+John H. Robinson, IV
+
+### UC-Tech 2026
 
 Note:
   Duration: ~30 seconds
