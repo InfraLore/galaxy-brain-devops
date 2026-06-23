@@ -92,8 +92,8 @@ Note:
 
 # Docs Drift
 
-Systems change faster than docs
-No compiler, no tests, no alarm
+- Systems change faster than docs
+- No compiler, no tests, no alarm
 
 Note:
   Duration: ~45 seconds
@@ -104,8 +104,8 @@ Note:
 
 # Completeness Is the Enemy
 
-More complete = harder to maintain
-Harder to maintain = faster drift
+- More complete = harder to maintain
+- Harder to maintain = faster drift
 
 Note:
   Duration: ~45 seconds
@@ -116,8 +116,8 @@ Note:
 
 # Engineers Don't Know What's Possible
 
-No discovery mechanism
-Tribal knowledge fills the gap
+- No discovery mechanism
+- Tribal knowledge fills the gap
 
 Note:
   Duration: ~45 seconds
@@ -128,9 +128,9 @@ Note:
 
 # Team Lore Diverges From Docs
 
-What people actually do
+- What people actually do  
 vs.
-What the docs say
+- What the docs say
 
 Note:
   Duration: ~45 seconds
@@ -152,9 +152,9 @@ Note:
 
 # One Demo Changed Everything
 
-Live terminal
-Vagrant up
-Make targets
+- Live terminal
+- Vagrant up
+- Make targets
 
 Note:
   Duration: ~1 min
@@ -165,9 +165,9 @@ Note:
 
 # Make Is 50 Years Old
 
-Survived because it solves timeless problems
-Encodes dependencies, relationships, intent
-Available everywhere
+- Survived because it solves timeless problems
+- Encodes dependencies, relationships, intent
+- Available everywhere
 
 Note:
   Duration: ~1 min
@@ -178,9 +178,9 @@ Note:
 
 # Reframe Make
 
-Not a build tool
-An operational interface
-A knowledge catalog
+- Not a build tool
+- An operational interface
+- A knowledge catalog
 
 Note:
   Duration: ~1 min
@@ -193,9 +193,9 @@ Note:
 
 # Executable Knowledge
 
-Commands that document AND perform
-The interface is the documentation
-No drift possible
+- Commands that document AND perform
+- The interface is the documentation
+- No drift possible
 
 Note:
   Duration: ~1 min
@@ -222,9 +222,9 @@ Note:
 
 # Write Targets Like You're Writing for Sage
 
-Clear intent
-Safe defaults
-Helpful output
+- Clear intent
+- Safe defaults
+- Helpful output
 
 Note:
   Duration: ~1 min
@@ -235,9 +235,9 @@ Note:
 
 # The Executable README
 
-`make help` as the entry point
-Every project answers the same first question
-What can I do here?
+- `make help` as the entry point
+- Every project answers the same first question
+- What can I do here?
 
 Note:
   Duration: ~1 min
@@ -259,9 +259,9 @@ Note:
 
 # Make Help Is Always the Answer
 
-One command, any project
-Reveals everything you can do
-No prior knowledge required
+- One command, any project
+- Reveals everything you can do
+- No prior knowledge required
 
 Note:
   Duration: ~1 min
@@ -272,9 +272,9 @@ Note:
 
 # Build Knowledge As You Work
 
-Capture what you just figured out
-Name it for the problem, not the solution
-Start broad, refine later
+- Capture what you just figured out
+- Name it for the problem, not the solution
+- Start broad, refine later
 
 Note:
   Duration: ~1 min
@@ -285,9 +285,9 @@ Note:
 
 # Knowledge Flows From Personal to Team
 
-What you capture for yourself
-becomes what you share with your team
-becomes the project standard
+- What you capture for yourself
+- becomes what you share with your team
+- becomes the project standard
 
 Note:
   Duration: ~1 min
@@ -309,7 +309,7 @@ Note:
 
 # Years of Operational Knowledge
 
-`make help`
+- `make help`
 
 Note:
   Duration: ~1.5 min
@@ -331,9 +331,9 @@ Note:
 
 # The IMDS Problem
 
-Customer can't push Docker images
-ECR login failing
-Vague memory: "something about token hops"
+- Customer can't push Docker images
+- ECR login failing
+- Vague memory: "something about token hops"
 
 Note:
   Duration: ~45 seconds
@@ -344,9 +344,9 @@ Note:
 
 # The AI Found It
 
-`debug-imds` target
-Claude got excited
-"I think I know what this is"
+- `debug-imds` target
+- Claude got excited
+- "I think I know what this is"
 
 Note:
   Duration: ~1 min
@@ -357,9 +357,9 @@ Note:
 
 # Reconstruct the Chain
 
-Container → dind daemon → pod network → host NIC → IMDS
-Three hops
-Default hop limit: 1
+- Container → dind daemon → pod network → host NIC → IMDS
+- Three hops
+- Default hop limit: 1
 
 Note:
   Duration: ~1 min
@@ -370,9 +370,9 @@ Note:
 
 # The Project Remembered
 
-Permissions wall hit: pivoted
-Baked hop-limit 3 into launch template
-Recycled nodes
+- Permissions wall hit: pivoted
+- Baked hop-limit 3 into launch template
+- Recycled nodes
 
 Note:
   Duration: ~1 min
@@ -387,9 +387,9 @@ Note:
 
 # DEVEXP-309
 
-NVMe not mounting on all nodes
-Root EBS at 50-90%
-Should be under 5%
+- NVMe not mounting on all nodes
+- Root EBS at 50-90%
+- Should be under 5%
 
 Note:
   Duration: ~45 seconds
@@ -400,9 +400,9 @@ Note:
 
 # Investigate With the Makefile
 
-`debug-docker-storage`
-`debug-ephemeral-storage`
-`recycle-node`
+- `debug-docker-storage`
+- `debug-ephemeral-storage`
+- `recycle-node`
 
 Note:
   Duration: ~1 min
@@ -413,11 +413,11 @@ Note:
 
 # Five Bugs Found
 
-Older LT versions on some nodes
-Userdata exits early (set -euo pipefail)
-DirectoryOrCreate masks mount failures
-blkid suppresses errors
-grep device filter is fragile
+1. Older LT versions on some nodes
+2. Userdata exits early (set -euo pipefail)
+3. DirectoryOrCreate masks mount failures
+4. blkid suppresses errors
+5. grep device filter is fragile
 
 Note:
   Duration: ~1 min
@@ -430,9 +430,9 @@ Note:
 
 # Knowledge Was Created
 
-New diagnostics added
-New understanding captured
-Ticket still open — that's OK
+- New diagnostics added
+- New understanding captured
+- Ticket still open — that's OK
 
 Note:
   Duration: ~45 seconds
@@ -453,9 +453,9 @@ Note:
 
 # The Mystery Is Still Open
 
-`make help`
-You pick the path
-Discovery is the point
+- `make help`
+- You pick the path
+- Discovery is the point
 
 Note:
   Duration: ~7-8 min (live demo)
@@ -478,9 +478,9 @@ Note:
 
 # AI Agents Need What Humans Need
 
-Discoverability
-Clear vocabulary
-Executable intent
+- Discoverability
+- Clear vocabulary
+- Executable intent
 
 Note:
   Duration: ~1 min
@@ -491,9 +491,9 @@ Note:
 
 # Make Amplifies Good Practices
 
-Strong executable knowledge → better human outcomes
-Strong executable knowledge → better AI outcomes
-The practices are the same
+- Strong executable knowledge → better human outcomes
+- Strong executable knowledge → better AI outcomes
+- The practices are the same
 
 Note:
   Duration: ~1 min
@@ -515,8 +515,8 @@ Note:
 
 # Make This a Proper Prod Environment
 
-Use a Makefile
-Make me proud
+- Use a Makefile
+- Make me proud
 
 Note:
   Duration: ~1 min
@@ -527,9 +527,9 @@ Note:
 
 # First Attempt
 
-Production Docker Compose stack
-Full Makefile with `make help`
-Env guards, Rails hardening, secrets management, tests
+- Production Docker Compose stack
+- Full Makefile with `make help`
+- Env guards, Rails hardening, secrets management, tests
 
 Note:
   Duration: ~1 min
@@ -540,9 +540,9 @@ Note:
 
 # Why It Worked
 
-The project already had executable knowledge
-Codex reasoned from what the project knew
-One instruction was enough
+- The project already had executable knowledge
+- Codex reasoned from what the project knew
+- One instruction was enough
 
 Note:
   Duration: ~1 min
