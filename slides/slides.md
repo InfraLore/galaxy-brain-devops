@@ -193,9 +193,28 @@ Note:
 | Silently wrong | Fails visibly |
 
 Note:
-  Duration: ~1 min
-  Beat: The contrast table makes the argument concrete. A static runbook can be wrong and no one knows. An executable one fails loudly the moment it drifts. That's the feedback loop docs never had.
-  Source: resources/02-executable_readme.md
+  A static runbook can be wrong and no one knows. An executable one fails loudly the moment it drifts. That's the feedback loop docs never had. Make gives you that feedback loop.
+
+---
+
+# A Makefile
+
+```makefile
+.PHONY: help deploy rollback
+
+help: ## Show available commands
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) \
+		| awk 'BEGIN {FS = ":.*?## "}; {printf "  %-20s %s\n", $$1, $$2}'
+
+deploy: ## Deploy the current build to staging
+	./scripts/deploy.sh staging
+
+rollback: ## Roll back the last deployment safely
+	./scripts/rollback.sh
+```
+
+Note:
+  A Makefile is a collection of targets. Each target is a named command -- or a sequence of commands -- you can run. The `##` comment is a convention: it's what `make help` reads to tell you what each target does. A name, a description, and something to run.
 
 ---
 
@@ -206,9 +225,7 @@ Note:
 - Helpful output
 
 Note:
-  Duration: ~1 min
-  Beat: Practical design guidance. When naming and writing targets, ask: "Could Sage run this at 3 A.M. without asking anyone?" If not, fix the name, add a description, add guardrails.
-  Source: resources/02-executable_readme.md
+  Hardy: We can't get too far into the weeds with how to write a Makefile, but here's the guiding principle for executable knowledge: write targets like you're writing for Sage. Make your intent clear, use defaults, and be a little verbose with the output.
 
 ---
 
@@ -219,9 +236,7 @@ Note:
 - What can I do here?
 
 Note:
-  Duration: ~1 min
-  Beat: The Executable README pattern. A project that responds to `make help` with a clear list of operations has already answered the first question every new engineer asks. Show a before/after: 47-page setup doc vs. `make help` output.
-  Source: resources/02-executable_readme.md, before/after example
+  Hardy: This might help. Think of the Makefile as an Executable README. A project that responds to `make help` with a clear list of operations has already answered the first question every new engineer asks, "what can I do with this?"
 
 ---
 
@@ -230,22 +245,18 @@ Note:
 # Systems That Teach
 
 Note:
-  Duration: ~30 seconds
-  Beat: Transition frame. John signals a shift from "what Make does" to "what Make enables." A well-made Makefile doesn't just run commands — it teaches people what the project knows.
-  Source: resources/21-make_as_your_personal_learning_tool.md
+  John: A well-made Makefile doesn't just run commands — it teaches people what the project knows.
 
 ---
 
-# Make Help Is Always the Answer
+# `make help` Is Always the Answer
 
 - One command, any project
 - Reveals everything you can do
 - No prior knowledge required
 
 Note:
-  Duration: ~1 min
-  Beat: The universal entry point. `make help` is the same in every project — once an engineer knows this pattern, they can onboard to any project that uses it. Knowledge becomes portable.
-  Source: resources/02-executable_readme.md
+  John: `make help` is the universal entry point. It is the same in every project — once an engineer knows this pattern, they can onboard to any project that uses it. Knowledge becomes portable. Once you put this in action in a few projects, it becomes comfortable muscle memory. Even for familiar projects. It's like typing "print working directory" a million times a day: a reminder, I am here, this is what I can do.
 
 ---
 
@@ -256,9 +267,7 @@ Note:
 - Start broad, refine later
 
 Note:
-  Duration: ~1 min
-  Beat: The personal runbook pattern. Every time you search for the same command twice, that command belongs in your Makefile. The act of capturing it teaches you the tool better. Reference the progression from week-1 basics to month-6 teaching others.
-  Source: resources/21-make_as_your_personal_learning_tool.md
+  Hardy: You don't have to write a perfect Makefile up front, from scratch. Think of them as a way to collect things you've learned. Every time you search for the same command twice, that command belongs in your Makefile. The act of capturing it teaches you the tool better. And you don't have to look that command up again. A Makefile can start as your own personal runbook.
 
 ---
 
@@ -269,10 +278,7 @@ Note:
 - becomes the project standard
 
 Note:
-  Duration: ~1 min
-  Beat: The natural progression. Personal runbooks become team runbooks become operational standards. No policy required — it happens organically when the tooling makes sharing easy.
-  Transition: Let me show you what this looks like at scale.
-  Source: resources/21-make_as_your_personal_learning_tool.md
+  Hardy: Personal runbooks become team runbooks become operational standards. No policy required — it happens organically when the tooling makes sharing easy. Let me show you what this looks like.
 
 ---
 
@@ -281,8 +287,7 @@ Note:
 # A Real Project
 
 Note:
-  Duration: ~30 seconds
-  Beat: Hardy opens the actual EKS project used at UCSF. No slides needed — the terminal is the demo. This slide is just the transition frame: "Here it is. Let's see what it knows."
+  Hardy: Here's a Makefile that grew organically: as I found commands that worked, I added them to the Makefile. It's the management harness for our self-hosted GitHub Actions runner, which is hosted on an AWS EKS cluster. It's a nice little project to demo, because it's mostly about making compute available to our GitHub Actions workflows on our on-prem GitHub Enterprise Server instance. As a Kubernetes cluster, is pretty resilient, we can deploy to it in the middle of the day without impacting our users. So, yes, this is prod. We won't burn it down. It will be OK.
 
 ---
 
@@ -291,61 +296,30 @@ Note:
 - `make help`
 
 Note:
-  Duration: ~1.5 min
-  Beat: Run `make help` live. Let the audience read the output. Dozens of targets, organized by function: deploy, debug, recycle, diagnose. Each one is a piece of knowledge that was captured the day someone figured it out.
-  Beat: Hardy narrates briefly — "This target was added when we hit the IMDS problem. This one was added after a node recycling incident. Each one has a story."
-  Transition: Speaking of stories — let me tell you about one of those targets.
+  Hardy: Run `make help`. Look at that output. Every section -- Setup, ARC, Node Management, Debugging -- represents a category of problems this project has solved. The debugging section alone has 20 targets. Each one was added the day I hit something I didn't want to hit again. `debug-imds` -- we'll come back to that one. `recycle-node`, `debug-ephemeral-storage`, `troubleshoot` -- every one of these has a story. This Makefile didn't come from a planning meeting. It grew.
 
 ---
 
 # The Project Knows More Than We Do
 
+> :robot:
+> "Yes - it's there, though it's called 'IMDS hop limit' rather than 'Token hop limit.' These are the same thing... `debug-imds` target that checks hop limit on EKS nodes"
+
+```
+inner container (workflow step)
+  → dind daemon pod
+    → pod network
+      → host NIC
+        → IMDS
+That's 3 hops, not 2.
+```
+
 Note:
-  Duration: ~30 seconds
-  Beat: Set up Act VII. The punchline isn't just that the Makefile is useful — it's that it preserves knowledge beyond human memory. Hardy: "There was a day when I couldn't remember what we'd done, but the project could."
+  Hardy: I was helping a customer convert a GitHub Actions workflow to a container-based approach. As soon as he hit ECR login failures, he was ready to abandon the whole thing. Then he remembered we'd fixed something about "hops" before -- but neither of us could remember the details. So I pulled up the Makefile, opened Claude, and asked it to look for anything about hops. Claude got very excited. Because the project remembered.
 
 ---
 
 <!-- Speaker: Hardy -->
-
-# The IMDS Problem
-
-- Customer can't push Docker images
-- ECR login failing
-- Vague memory: "something about token hops"
-
-Note:
-  Duration: ~45 seconds
-  Beat: Set up the incident. Docker-in-Docker workflow on EKS. Customer hits an auth failure. Hardy vaguely remembers solving something like this before — but can't remember the details.
-  Source: transcripts/a-partial-reconstruction-of-a-session-involving-a-Makefile.txt
-
----
-
-# The AI Found It
-
-- `debug-imds` target
-- Claude got excited
-- "I think I know what this is"
-
-Note:
-  Duration: ~1 min
-  Beat: Hardy brought in Claude to help investigate. Claude scanned the Makefile, found the `debug-imds` target, and immediately started reconstructing the problem. The project's vocabulary gave the AI the context it needed to reason.
-  Source: transcripts/a-partial-reconstruction-of-a-session-involving-a-Makefile.txt
-
----
-
-# Reconstruct the Chain
-
-- Container → dind daemon → pod network → host NIC → IMDS
-- Three hops
-- Default hop limit: 1
-
-Note:
-  Duration: ~1 min
-  Beat: Walk the audience through the DIND chain. EC2 Instance Metadata Service has a configurable hop limit for IMDSv2 tokens. Default is 1. Three hops = token expires before it arrives. This is the "token hops" thing Hardy half-remembered.
-  Source: transcripts/a-partial-reconstruction-of-a-session-involving-a-Makefile.txt
-
----
 
 # The Project Remembered
 
