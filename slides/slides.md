@@ -54,6 +54,13 @@ Note:
 
 ---
 
+![](sage-after-page.png)
+
+Note:
+  John: right, Sage?
+
+---
+
 # Knowledge Without Access Is Not Knowledge
 
 Note:
@@ -152,14 +159,14 @@ Note:
 
 ---
 
-# Reframe Make
+# `make help`
 
 - Not a build tool
 - An operational interface
 - A knowledge catalog
 
 Note:
-  Most people think of Make as a build tool. Something you use to compile software. That's how it started, and that reputation stuck. But that's not what we're talking about. We want you to think of Make differently -- as an operational interface. A way to expose what a project knows how to do. Not a build tool. A knowledge catalog. When you run `make help`, you're not asking about compilation steps. You're asking the project: what can you do?
+  John: Most people think of Make as a build tool. Something you use to compile software. That's how it started, and that reputation stuck. But that's not what we're talking about. We want you to think of Make differently -- as an operational interface. A way to expose what a project knows how to do. Not a build tool. A knowledge catalog. When you run `make help`, you're not asking about compilation steps. You're asking the project: what can you do?
 
 ---
 
@@ -172,9 +179,7 @@ Note:
 - No drift possible
 
 Note:
-  Duration: ~1 min
-  Beat: Define the term that runs through the whole talk. Executable knowledge is not documentation about commands — it IS the commands. When the docs ARE the thing you run, they can't drift from reality.
-  Source: resources/02-executable_readme.md
+  Executable knowledge. Not documentation *about* commands -- the commands themselves. When the interface IS the documentation, it can't drift from reality. It either works or it fails loudly. No silent rot. Think about what Sage needed at 3 AM Saturday -- he didn't need a wiki page. He needed something he could run. That's executable knowledge. That's Make.
 
 ---
 
@@ -528,12 +533,9 @@ Note:
 
 <!-- Speaker: Both -->
 
-# Back to Sage
+![](sage-after-make.png)
 
 Note:
-  Duration: ~30 seconds
-  Beat: Show sage-before.png. Sage at 3 A.M., alone, searching through docs that don't help. Then show sage-after-make.png. Sage running `make help`, finding the answer. The same person, different system.
-  Images: sage-before.png, sage-after-make.png
 
 ---
 
@@ -546,7 +548,7 @@ Note:
 
 ---
 
-# InfraLore
+# https://github.com/InfraLore
 
 - **[Make for DevOps](https://github.com/InfraLore/make_for_devops)** -- free book, BSD-0, PDF + epub
 - **[Makefile Sage](https://github.com/InfraLore/makefile-sage)** -- Claude Code plugin
@@ -556,10 +558,10 @@ Note:
   Duration: ~30 seconds
   Beat: Low-key. These are free. The book exists because we wrote it the same way we write Makefiles -- incrementally, out in the open.
 
---
+---
 
-![](make-for-devops-cover.png)
+# Questions?
 
-Note:
-  Beat: Book cover, if the room wants to know more.
-  Images: make-for-devops-cover.png
+---
+
+# Acknowledgements
