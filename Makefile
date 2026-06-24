@@ -9,7 +9,9 @@ help: ## Show this help message
 slides-shell: slides-init ## Launch a shell with the slides venv activated
 	@VIRTUAL_ENV=.venv PATH=".venv/bin:$(PATH)" $(SHELL)
 
-slides-init: pyproject.toml ## Set up Python venv for slides tooling
+slides-init: pyproject.toml .venv/bin/pip ## Set up Python venv for slides tooling
+
+.venv/bin/pip:
 	python3 -m venv .venv
 	.venv/bin/pip install -e .
 
