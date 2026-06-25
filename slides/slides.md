@@ -282,7 +282,7 @@ Note:
 
 help: ## Show available commands
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) \
-		| awk 'BEGIN {FS = ":.*?## "}; {printf "  %-20s %s\n", $$1, $$2}'
+	  | awk '{printf "  %-20s %s\n", $$1, $$2}'
 
 deploy: ## Deploy the current build to staging
 	./scripts/deploy.sh staging
@@ -292,10 +292,11 @@ rollback: ## Roll back the last deployment safely
 ```
 
 Note:
-  A Makefile is a collection of targets. Each target is a named command -- or
-  a sequence of commands -- you can run. The `##` comment is a convention:
-  it's what `make help` reads to tell you what each target does. A name, a
-  description, and something to run.
+  A Makefile is a collection of targets. Each target is a named command --
+  or a sequence of commands -- you can run. That `.PHONY` line tells Make
+  these aren't files -- just named actions. The double-hashtag comment is
+  what that surprising grep in `make help` is looking for -- that's how
+  each target gets its description.
 
 ---
 
@@ -452,25 +453,29 @@ Note:
   the launch template, and ran the "tweak runner" target to deploy it, and our
   nodes came up at hop limit 3. My customer's workflows started working.
   Problem solved.Our shared memory was vague. The project's memory was
-  perfect. The Makefile remembered what the we forgot. That's **knowledge
+  perfect. The Makefile remembered what we forgot. That's **knowledge
   preservation**. Now let me show you **knowledge creation**.
 
 ---
 
-<!-- Speaker: Hardy -->
-
-# DEVEXP-309
+# DEVEXP-306 -> DEVEXP-309
 
 - NVMe not mounting on all nodes
 - Root EBS at 50-90%
 - Should be under 5%
 
+> :robot:
+> "`DirectoryOrCreate` will create the dir on root EBS if NVMe isn't
+> mounted. The dind container starts fine, writes everything to root EBS,
+> and no pod ever fails. The problem surfaces only via the Datadog monitor."
+
 Note:
-  Duration: ~45 seconds
-  Beat: Set up the mystery. The devex-actions-cluster should be using NVMe for
-  Docker storage. Root EBS should be nearly empty. It's not. Why?
-  Source:
-  transcripts/DEVEXP-309-NVMe-Mount-Investigation-and-Containerd-Root-Directory-Diagnosis.txt
+  Hardy: This one started as DEVEXP-306 -- root EBS filling up. We fixed
+  that. The fix is holding. But in the process of investigating, we found
+  a deeper mystery: NVMe isn't mounting on all nodes. When it doesn't,
+  Docker falls back to root EBS. We've got about 5GB of root usage we
+  could clean up if we pursue it. It's in the backlog. It's not worth the
+  squeeze right now.
 
 ---
 
@@ -481,12 +486,10 @@ Note:
 - `recycle-node`
 
 Note:
-  Duration: ~1 min
-  Beat: Walk through the investigation using existing targets. Each one was
-  added by someone who hit a similar problem before. The Makefile already knew
-  how to look at this.
-  Source:
-  transcripts/DEVEXP-309-NVMe-Mount-Investigation-and-Containerd-Root-Directory-Diagnosis.txt
+  Hardy: The Makefile already knew how to look at this. `debug-docker-storage`,
+  `debug-ephemeral-storage`, `recycle-node` -- targets I added when I hit
+  storage problems before. I didn't have to figure out how to investigate.
+  The project told me where to start.
 
 ---
 
@@ -499,16 +502,15 @@ Note:
 5. grep device filter is fragile
 
 Note:
-  Duration: ~1 min
-  Beat: The investigation turned up 5 distinct bugs in the launch template,
-  userdata script, and values.yaml. This is the kind of layered complexity
-  that only emerges through careful hands-on investigation.
-  Beat: Key point: the ticket is still open. We found the bugs. We haven't
-  fixed them yet. That's OK — that's where Act IX comes in.
-  Transition: But here's what I want you to notice: the investigation grew the
-  Makefile.
-  Source:
-  transcripts/DEVEXP-309-NVMe-Mount-Investigation-and-Containerd-Root-Directory-Diagnosis.txt
+  Hardy: What we found was layers. Not one bug -- five. Older launch template
+  versions on some nodes. A userdata script that exits early on any error.
+  A `DirectoryOrCreate` config that silently falls back to root EBS. A
+  `blkid` call that suppresses errors. A device filter that's fragile if
+  the instance type ever changes. Any one of them alone might look like
+  bad luck. Together they explain exactly why some nodes mount and some
+  don't. The ticket is still open. Our verdict: 306 contained root
+  storage usage to about 5GB. We can live with that. 309 is in the
+  backlog. The investigation created knowledge.
 
 ---
 
@@ -519,57 +521,52 @@ Note:
 - Ticket still open — that's OK
 
 Note:
-  Duration: ~45 seconds
-  Beat: The Makefile isn't a museum. It's a living system. The investigation
-  added new targets, new diagnostics, new understanding. The problem isn't
-  solved — but the project knows more than it did before.
-  Transition: And speaking of that open ticket — we'd like your help with it.
+  John: The investigation grew the Makefile. New diagnostic targets, new
+  understanding captured. The ticket isn't fixed -- but the project knows
+  more than it did before you started. That's **knowledge creation**.
+  You know, Hardy, we have a whole room of engineers here. Maybe they
+  have ideas for how to get that storage moved over to NVMe?
 
 ---
 
 <!-- Speaker: Both -->
 
-# Your Turn
+# Mob Programming!
+
+- Solutions not required
+- We are creating knowledge
 
 Note:
-  Duration: ~30 seconds
-  Beat: Both speakers. Hardy: "We're going to open the EKS project right now
-  and let you guide us." John: "There's an open mystery — DEVEXP-309. We have
-  the Makefile. You have questions. Let's see what we find."
-
+  Hardy: What a great idea! Let me start up the project now.
+  John: There's an open mystery — DEVEXP-309. We have
+  the Makefile. You have questions. Let's see what we find.
+  Hardy: I'll invite our robot friend.
+  [demo]
+  
 ---
 
-# The Mystery Is Still Open
+# Retrospective
 
 - `make help`
 - You pick the path
 - Discovery is the point
 
 Note:
-  Duration: ~7-8 min (live demo)
-  Beat: This slide stays up during the live demo. Audience suggests
-  investigation directions. Speakers run commands, narrate findings, add to
-  the Makefile live if anything new emerges.
-  Beat: Success condition: the audience sees the project teaching. Resolution
-  is a bonus.
-  Fallback: If demo environment is unavailable, walk through the DEVEXP-309
-  transcript instead — the story is strong enough to carry without a live
-  terminal.
+  John: Let's take a quick look back at what just happened.
+
+  - *What was the first thing Claude did when I opened that project?*
+    Ran `make help` -- same as any new engineer.
+  - *What made the investigation targets findable?*
+    The names. `debug-docker-storage`, `debug-ephemeral-storage` -- the
+    intent is right there.
+  - *If we hadn't had those targets, what would Claude have had to do?*
+    Read the whole codebase and guess.
+  - *So who did we actually write that Makefile for?*
+    Sage. But it turns out...
 
 ---
 
 <!-- Speaker: Hardy -->
-
-# An Unexpected Observation
-
-Note:
-  Duration: ~30 seconds
-  Beat: Hardy: "Something happened during these investigations that I didn't
-  expect." Pause. Let the audience wonder what's coming. This act is short but
-  lands a big idea.
-  Source: resources/20-the_future_of_make_in_devops.md
-
----
 
 # AI Agents Need What Humans Need
 
@@ -578,12 +575,9 @@ Note:
 - Executable intent
 
 Note:
-  Duration: ~1 min
-  Beat: The observation: when Hardy brought Claude into the IMDS
-  investigation, it worked because the Makefile gave the AI the same things it
-  gives humans. A good Makefile is already a good AI interface. You don't need
-  to do anything special.
-  Source: resources/20-the_future_of_make_in_devops.md
+  Hardy: You just saw it. The same Makefile that helps Sage, helps Claude.
+  Discoverability, clear vocabulary, executable intent -- those aren't AI
+  features. They're good engineering. Make gives you all three.
 
 ---
 
@@ -593,25 +587,30 @@ Note:
 - Strong executable knowledge → better AI outcomes
 - The practices are the same
 
+[Simon Willison, "Vibe engineering"](https://simonwillison.net/2025/Oct/7/vibe-engineering/)
+
 Note:
-  Duration: ~1 min
-  Beat: "Vibe engineering" — seasoned professionals using AI to accelerate
-  while staying accountable. Make doesn't replace judgment. It creates the
-  conditions where judgment, human or AI, can operate effectively.
-  Transition: John's going to show you what that looks like when you push it
-  to the limit.
-  Source: resources/20-the_future_of_make_in_devops.md
+  Hardy: Simon Willison coined the term "vibe engineering" -- seasoned
+  professionals accelerating their work with LLMs while staying
+  proudly and confidently accountable for the software they produce. His core
+  observation: **AI tools amplify existing expertise**. Make gives that
+  expertise somewhere to land. John's going to show you what that looks
+  like when you push it to the limit.
 
 ---
 
 <!-- Speaker: John -->
 
-# One Instruction
+# Put Avalon in Production
 
 Note:
-  Duration: ~30 seconds
-  Beat: John: "I want to tell you about Avalon." Short pause. "I gave Codex
-  one prompt."
+  John: This is what I was asked to do. Avalon is an audio/visual
+  repository built on top of Samvera, or some of you might know Samvera
+  under its old name: Hydra. I'm an active member of the Samvera
+  community, but I haven't looked at Avalon in years. Like many projects,
+  their docs have drifted. There is no longer any current "here's how to
+  run this in production" documentation. Hardy suggested that I try to
+  get Codex to one-shot it. So I did.
 
 ---
 
@@ -621,10 +620,7 @@ Note:
 - Make me proud
 
 Note:
-  Duration: ~1 min
-  Beat: Read the prompt aloud, slowly. Let it land. The audience should be
-  skeptical — that's too vague to work, right? John: "First attempt."
-  Source: transcripts/one-shotting-Avalon-with-MakefileSage-and-Codex.md
+  This is the prompt. I'll skip the part where I leave you in suspense: it worked.
 
 ---
 
@@ -645,18 +641,18 @@ Note:
 
 # Why It Worked
 
-- The project already had executable knowledge
-- Codex reasoned from what the project knew
-- One instruction was enough
+- Existing Docker Compose + Rails structure gave Codex context
+- Makefile Sage gave the project coherent structure
+- The Makefile gave tests a natural home
 
 Note:
-  Duration: ~1 min
-  Beat: The thesis in action. Avalon already had a Rails structure, Docker
-  conventions, existing compose files — executable knowledge the AI could
-  reason from. The Makefile wasn't magic. It was the foundation that made the
-  magic possible.
-  Transition: Which brings us back to Sage.
-  Source: transcripts/one-shotting-Avalon-with-MakefileSage-and-Codex.md
+  John: Avalon already had Docker Compose files, a Rails structure, existing
+  conventions. Codex could reason from all of that. The instruction to use a
+  Makefile triggered Makefile Sage, which gave the whole project a coherent
+  structure and a discoverable interface. Two words later -- "add tests" --
+  Codex looked at the existing RSpec suite, understood the conventions, and
+  wrote tests that checked the Makefile's own contracts. The Makefile wasn't
+  the output. It was the skeleton that made everything else snap into place.
 
 ---
 

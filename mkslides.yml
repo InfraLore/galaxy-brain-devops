@@ -1,7 +1,7 @@
 slides:
   theme: solarized
   title: "Galaxy Brain DevOps"
-  highlight_theme: monokai
+  highlight_theme: stackoverflow-light
 
 revealjs:
   transition: slide
