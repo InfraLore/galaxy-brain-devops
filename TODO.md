@@ -2,9 +2,6 @@
 
 Slides still needing conversational notes (drop Duration/Beat/Source when writing):
 
-## Act V - The Project Remembered
-- [ ] **The Project Remembered** -- permissions wall, launch template pivot, nodes recycled
-
 ## Act VI - DEVEXP-309
 - [ ] **DEVEXP-309** -- set up the mystery
 - [ ] **Investigate With the Makefile** -- walk existing targets
@@ -32,6 +29,9 @@ Slides still needing conversational notes (drop Duration/Beat/Source when writin
 - [ ] **InfraLore resources slide** -- clean up Duration/Beat metadata
 
 ## Dropped slides
-- ~~The IMDS Problem~~ -- content folded into The Project Knows More Than We Do
-- ~~The AI Found It~~ -- content folded into The Project Knows More Than We Do
-- ~~Reconstruct the Chain~~ -- content folded into The Project Knows More Than We Do
+- ~~The IMDS Problem~~ -- content folded into
+  The Project Knows More Than We Do
+- ~~The AI Found It~~ -- content folded into
+  The Project Knows More Than We Do
+- ~~Reconstruct the Chain~~ -- content folded into
+  The Project Knows More Than We Do
