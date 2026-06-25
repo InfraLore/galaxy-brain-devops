@@ -12,6 +12,8 @@ John H. Robinson, IV
 
 ### UC-Tech 2026
 
+[![CC BY 4.0](https://licensebuttons.net/l/by/4.0/88x31.png)](https://creativecommons.org/licenses/by/4.0/)
+
 Note:
   Hey, I'm Hardy. I work on the Developer Experience team at UCSF. And I'm
   here with my friend and co-author John. John is a veteran Debian developer
@@ -653,6 +655,8 @@ Note:
   Codex looked at the existing RSpec suite, understood the conventions, and
   wrote tests that checked the Makefile's own contracts. The Makefile wasn't
   the output. It was the skeleton that made everything else snap into place.
+  We'll tell you more about Makefile Sage at the end. Speaking of Sage,
+  let's check in with him now that he's been working with Make for a while.
 
 ---
 
@@ -661,18 +665,25 @@ Note:
 ![](sage-after-make.png)
 
 Note:
+  John: Remember Sage? Three AM Saturday, alone with five runbooks that
+  didn't help. That was the system failing him. Here's the thing about
+  people like Sage -- they don't just survive that night. They fix the
+  system. They add the target that would have saved them. They capture
+  what they learned. The next time someone needs a rollback at 3 AM, the
+  project remembers. Sage is in the office now. The knowledge he built
+  is still running.
 
 ---
 
-# Can Your System Teach the Next Person?
+# Can Your System Teach the Next Person (or entity)?
 
 Note:
-  Duration: ~1 min
-  Beat: The question that lands the whole talk. Not "do you have
-  documentation?" — "can your system teach?" There's a difference. Sit on it
-  for a beat. Let the audience answer it internally.
-  Beat: Hardy and John can share this slide — alternate the question with eye
-  contact to the room.
+  - Hardy: *Think about your project right now. If Sage joined your team tomorrow,
+    what would he run first?*
+  - Hardy: *Does `make help` tell him something useful? Or does he have to ask?*
+  - John: *When you leave -- what does the project remember?*
+
+  John: Can your system teach the next person?
 
 ---
 
@@ -685,9 +696,10 @@ Note:
 <!-- markdownlint-enable MD013 -->
 
 Note:
-  Duration: ~30 seconds
-  Beat: Low-key. These are free. The book exists because we wrote it the same
-  way we write Makefiles -- incrementally, out in the open.
+  Hardy: We have some resources for you, at that GitHub organization
+  linked on the slide. Including a book *Make for DevOps*, the Claude and
+  Codex plugin *Makefile Sage* that we mentioned earlier, and a cheatsheet
+  for Make. We hope you use them.
 
 ---
 
@@ -696,3 +708,13 @@ Note:
 ---
 
 # Acknowledgements
+
+- *Sage (original photo)*: [Nimi Diffa](https://unsplash.com/photos/man-smiling-lR0f4PSt52s),
+  Unsplash
+- *Sage (subsequent images)*: Gemini Flash-Lite, Google, 2025
+- *Book cover*: GPT-5, OpenAI, 2025. CC0 1.0 Universal
+- *"Vibe engineering"*: Simon Willison, simonwillison.net/2025/Oct/7/vibe-engineering/
+- *"Vibe coding"*: Andrej Karpathy, 2025
+- *Samvera and Avalon communities*: samvera.org
+- *mkslides*: Martijn Saelens and contributors
+- *reveal.js*: Hakim El Hattab and contributors
