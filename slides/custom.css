@@ -7,3 +7,14 @@
 .reveal ul {
   list-style-type: square;
 }
+
+.reveal::after {
+  content: "github.com/InfraLore/galaxy-brain-devops";
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.55em;
+  opacity: 0.55;
+  color: var(--r-main-color, inherit);
+}
