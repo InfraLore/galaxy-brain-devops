@@ -705,6 +705,8 @@ Note:
 
 # Questions?
 
+- https://github.com/InfraLore/galaxy-brain-devops
+- https://github.com/InfraLore/
 ---
 
 # Acknowledgements
